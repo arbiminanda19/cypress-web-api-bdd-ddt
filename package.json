@@ -1,0 +1,23 @@
+{
+  "name": "automation-cypress",
+  "version": "1.0.0",
+  "description": "this is automation test for ui and api",
+  "main": "index.js",
+  "scripts": {
+    "runAll": "cypress run --spec cypress/e2e --browser chrome",
+    "test-ui": "cypress run --spec cypress/e2e/baseTest.cy.js --browser chrome",
+    "test-api": "cypress run --spec cypress/e2e/baseTestAPI.cy.js"
+  },
+  "author": "arbi",
+  "license": "ISC",
+  "devDependencies": {
+    "cypress": "^12.4.0",
+    "cypress-file-upload": "^5.0.8"
+  },
+  "dependencies": {
+    "@cypress/xpath": "^2.0.3",
+    "chai-json-schema": "^1.5.1",
+    "cypress-mochawesome-reporter": "^3.2.3",
+    "yarn": "^1.22.19"
+  }
+}
