@@ -1,13 +1,13 @@
-import * as env from "./config/env.js";
+import * as globalVar from "./config/var.js";
 import * as schema from "./schema/company.js";
 
 describe("API Staging Cicle", () => {
   it("Create Company", () => {
     cy.request({
       method: "POST",
-      url: env.baseUrlAPI + "/companies",
+      url: Cypress.env("baseUrlAPI") + "/companies/",
       headers: {
-        Authorization: env.token,
+        Authorization: globalVar.token,
         "Content-Type": "application/json",
       },
       body: {
@@ -20,17 +20,18 @@ describe("API Staging Cicle", () => {
         "message",
         "Successfully create company user"
       );
-      env.companyId = response.body.newCompany._id;
-      env.userId = response.body.user._id;
+      globalVar.companyId = response.body.newCompany._id;
+      globalVar.userId = response.body.user._id;
       expect(response.body).to.be.jsonSchema(schema.jsonSchemaCreateCompany);
     });
   });
   it("Create Team", () => {
     cy.request({
       method: "POST",
-      url: env.baseUrlAPI + "/teams?companyId=" + env.companyId,
+      url:
+        Cypress.env("baseUrlAPI") + "/teams?companyId=" + globalVar.companyId,
       headers: {
-        Authorization: env.token,
+        Authorization: globalVar.token,
         "Content-Type": "application/json",
       },
       body: {
@@ -40,39 +41,40 @@ describe("API Staging Cicle", () => {
       },
     }).then((response) => {
       expect(response.status).to.equal(200);
-      env.teamId = response.body.newTeam._id;
+      globalVar.teamId = response.body.newTeam._id;
     });
   });
   it("Update Team", () => {
-    env.teamName = "teamtuerdf edited";
+    globalVar.teamName = "teamtuerdf edited";
     cy.request({
       method: "PATCH",
-      url: env.baseUrlAPI + "/teams/" + env.teamId,
+      url: Cypress.env("baseUrlAPI") + "/teams/" + globalVar.teamId,
       headers: {
-        Authorization: env.token,
+        Authorization: globalVar.token,
       },
       form: true,
       body: {
-        name: env.teamName,
+        name: globalVar.teamName,
         desc: "desccccc edited",
       },
     }).then((response) => {
       expect(response.status).to.equal(200);
-      expect(response.body.currentTeam.name).to.equal(env.teamName);
+      expect(response.body.currentTeam.name).to.equal(globalVar.teamName);
     });
   });
   it("Upload Profile Image", () => {
-    cy.fixture(env.filePath, "binary")
+    cy.fixture(globalVar.filePath, "binary")
       .then((file) => Cypress.Blob.binaryStringToBlob(file))
       .then((blob) => {
         var formdata = new FormData();
-        formdata.append("file", blob, env.filePath);
+        formdata.append("file", blob, globalVar.filePath);
         formdata.append("type", "image");
         cy.request({
-          url: env.baseUrlAPI + "/users/" + env.userId + "/photo",
+          url:
+            Cypress.env("baseUrlAPI") + "/users/" + globalVar.userId + "/photo",
           method: "POST",
           headers: {
-            Authorization: env.token,
+            Authorization: globalVar.token,
             "Content-type": "multipart/form-data",
           },
           body: formdata,
@@ -84,9 +86,9 @@ describe("API Staging Cicle", () => {
   it("Delete Company", () => {
     cy.request({
       method: "DELETE",
-      url: env.baseUrlAPI + "/companies/" + env.companyId,
+      url: Cypress.env("baseUrlAPI") + "/companies/" + globalVar.companyId,
       headers: {
-        Authorization: env.token,
+        Authorization: globalVar.token,
         "Content-Type": "application/json",
       },
     }).then((response) => {

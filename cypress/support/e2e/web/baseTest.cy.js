@@ -1,5 +1,4 @@
 require("@cypress/xpath");
-import { baseUrlWeb } from "./config/env.js";
 import * as objects from "./objects/page.js";
 
 before(() => {
@@ -8,7 +7,7 @@ before(() => {
 
 describe("OrangeHR", () => {
   beforeEach(() => {
-    cy.visit(baseUrlWeb);
+    cy.visit(Cypress.env("baseUrl"));
     cy.get(objects.input_username).type("Admin");
     cy.xpath(objects.input_password).type("admin123");
     cy.xpath(objects.btn_submit).click();
