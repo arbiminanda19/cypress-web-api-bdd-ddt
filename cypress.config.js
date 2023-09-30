@@ -9,7 +9,7 @@ module.exports = defineConfig({
       on("file:preprocessor", cucumber());
     },
     specPattern: "cypress/support/e2e",
-    supportFile: false,
+    supportFile: "cypress/support/commands.js",
   },
   env: {
     baseUrl: "https://opensource-demo.orangehrmlive.com/",

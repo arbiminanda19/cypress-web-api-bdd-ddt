@@ -7,11 +7,7 @@ before(() => {
 
 describe("OrangeHR", () => {
   beforeEach(() => {
-    cy.visit(Cypress.env("baseUrl"));
-    cy.get(objects.input_username).type("Admin");
-    cy.xpath(objects.input_password).type("admin123");
-    cy.xpath(objects.btn_submit).click();
-    cy.xpath(objects.img_logo).should("be.visible");
+    cy.login("Admin", "admin123");
   });
 
   it("Open Recruitment", () => {

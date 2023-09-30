@@ -25,3 +25,12 @@
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
 import "cypress-file-upload";
+import * as objects from "./e2e/web/objects/page.js";
+
+Cypress.Commands.add("login", (username, password) => {
+  cy.visit(Cypress.env("baseUrl"));
+  cy.get(objects.input_username).type(username);
+  cy.xpath(objects.input_password).type(password);
+  cy.xpath(objects.btn_submit).click();
+  cy.xpath(objects.img_logo).should("be.visible");
+});
