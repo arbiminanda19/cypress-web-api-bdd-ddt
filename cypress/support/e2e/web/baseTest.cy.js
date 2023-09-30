@@ -1,5 +1,6 @@
 require("@cypress/xpath");
 import * as objects from "./objects/page.js";
+import { valid_login } from "./data/login.data.js";
 
 before(() => {
   cy.config("defaultCommandTimeout", 20000);
@@ -7,7 +8,7 @@ before(() => {
 
 describe("OrangeHR", () => {
   beforeEach(() => {
-    cy.login("Admin", "admin123");
+    cy.login(valid_login.username, valid_login.password);
   });
 
   it("Open Recruitment", () => {
